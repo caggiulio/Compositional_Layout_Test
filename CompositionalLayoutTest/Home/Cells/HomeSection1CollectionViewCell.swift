@@ -24,10 +24,14 @@ class HomeSection1CollectionViewCell: UICollectionViewCell {
     }
     
     func configureUI() {
-        self.contentView.backgroundColor = UIColor.random()
+
     }
     
     func setConstraints() {
         
+    }
+    
+    func setBackgroundColor(color: ColorizedCell) {
+        self.contentView.backgroundColor = color.backgroundColor
     }
 }

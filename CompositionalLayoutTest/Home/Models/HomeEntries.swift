@@ -8,7 +8,7 @@
 import Foundation
 
 struct HomeEntries {
-    var firstSection: [ColorizedCell]?
-    var secondSection: [ColorizedCell]?
-    var thirdSection: [ColorizedCell]?
+    var firstSection: [ColorizedCell]? = nil
+    var secondSection: [ColorizedCell]? = nil
+    var thirdSection: [ColorizedCell]? = nil
 }

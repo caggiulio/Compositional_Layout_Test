@@ -13,10 +13,10 @@ enum Home {
             
         }
         struct Response {
-            
+            var sectionColors: [ColorizedCell]
         }
         struct ViewModel {
-            
+            var sectionColors: [ColorizedCell]
         }
     }
 

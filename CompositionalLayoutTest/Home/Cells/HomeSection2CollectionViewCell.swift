@@ -30,4 +30,8 @@ class HomeSection2CollectionViewCell: UICollectionViewCell {
     func setConstraints() {
         
     }
+    
+    func setBackgroundColor(color: ColorizedCell) {
+        self.contentView.backgroundColor = color.backgroundColor
+    }
 }

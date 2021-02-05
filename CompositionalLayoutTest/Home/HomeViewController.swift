@@ -9,7 +9,9 @@
 import UIKit
 
 protocol HomeDisplayLogic: AnyObject {
-    func displaySomething(viewModel: Home.Something.ViewModel)
+    func displayFirstSection(viewModel: Home.Something.ViewModel)
+    func displaySecondSection(viewModel: Home.Something.ViewModel)
+    func displayThirdSection(viewModel: Home.Something.ViewModel)
 }
 
 class HomeViewController: UIViewController {
@@ -25,6 +27,8 @@ class HomeViewController: UIViewController {
         guard let view = view as? HomeView else { preconditionFailure("Unable to cast view to HomeView")}
         return view
     }
+    
+    var homeDataProvider: HomeDataProvider?
 
     // MARK: - Business properties
 
@@ -48,6 +52,9 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
+        self.fetchFirstSection()
+        self.fetchSecondSection()
+        self.fetchThirdSection()
     }
     
     // MARK: - Setup methods
@@ -68,10 +75,27 @@ class HomeViewController: UIViewController {
     // MARK: - Configure methods
 
     private func configureUI() {
-        
+        _view?.homeCollectionView.register(HomeSection1CollectionViewCell.self, forCellWithReuseIdentifier: "HomeSection1CollectionViewCell")
+        _view?.homeCollectionView.register(HomeSection2CollectionViewCell.self, forCellWithReuseIdentifier: "HomeSection2CollectionViewCell")
+        homeDataProvider = HomeDataProvider(collectionView: _view!.homeCollectionView)
     }
     
     // MARK: - User interactions
+    
+    func fetchFirstSection() {
+        let request = Home.Something.Request()
+        interactor?.fetchFirstSection(request: request)
+    }
+    
+    func fetchSecondSection() {
+        let request = Home.Something.Request()
+        interactor?.fetchSecondSection(request: request)
+    }
+    
+    func fetchThirdSection() {
+        let request = Home.Something.Request()
+        interactor?.fetchThirdSection(request: request)
+    }
     
     // MARK: - Private methods
 
@@ -80,9 +104,19 @@ class HomeViewController: UIViewController {
 // MARK: - HomeDisplayLogic
 
 extension HomeViewController: HomeDisplayLogic {
-
-    func displaySomething(viewModel: Home.Something.ViewModel) {
-
+    func displayFirstSection(viewModel: Home.Something.ViewModel) {
+        homeDataProvider?.firstSectionColorsDisplayed = viewModel.sectionColors
+        homeDataProvider?.applySnapshot(homeEntries: HomeEntries(firstSection: viewModel.sectionColors))
+    }
+    
+    func displaySecondSection(viewModel: Home.Something.ViewModel) {
+        homeDataProvider?.secondSectionColorsDisplayed = viewModel.sectionColors
+        homeDataProvider?.applySnapshot(homeEntries: HomeEntries(secondSection: viewModel.sectionColors))
+    }
+    
+    func displayThirdSection(viewModel: Home.Something.ViewModel) {
+        homeDataProvider?.thirdSectionColorsDisplayed = viewModel.sectionColors
+        homeDataProvider?.applySnapshot(homeEntries: HomeEntries(thirdSection: viewModel.sectionColors))
     }
 
 }
